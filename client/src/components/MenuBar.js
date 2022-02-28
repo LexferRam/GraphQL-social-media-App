@@ -1,37 +1,66 @@
-import React, { useState } from 'react'
-import { Menu, Segment } from 'semantic-ui-react'
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
+import AppRegistrationRoundedIcon from '@mui/icons-material/AppRegistrationRounded';
+import { Link } from 'react-router-dom'
+import { Button } from '@mui/material';
 
-export default function MenuBar() {
-    const [activeItem, setActiveItem] = useState('home')
+export default function MenuAppBar() {
+    const pathname = window.location.pathname;
+    const path = pathname === '/' ? 'home' : pathname.substr(1);
 
-    const handleItemClick = (e, { name }) => setActiveItem(name)
-
+    const [activeItem, setActiveItem] = React.useState(path);
+    
+    const handleItemClick = (e) => {
+        setActiveItem(e.target.name);
+    };
 
     return (
-        <Menu pointing secondary>
-            <Menu.Item
-                name='home'
-                active={activeItem === 'home'}
-                onClick={handleItemClick}
-            />
-            <Menu.Item
-                name='friends'
-                active={activeItem === 'friends'}
-                onClick={handleItemClick}
-            />
-            <Menu.Menu position='right'>
-                <Menu.Item
-                    name='login'
-                    active={activeItem === 'login'}
-                    onClick={handleItemClick}
-                />
-                <Menu.Item
-                    name='register'
-                    active={activeItem === 'register'}
-                    onClick={handleItemClick}
-                />
-            </Menu.Menu>
-        </Menu>
-
-    )
+        <Box sx={{ flexGrow: 1, marginBottom: '3px' }}>
+            <AppBar position="static" color="default">
+                <Toolbar>
+                    <div style={{ flexGrow: 1 }}>
+                        <Link to='/' style={linkStyles}>
+                            <Button
+                                name='home'
+                                onClick={handleItemClick}
+                                variant={activeItem === 'home' ? "outlined" : null}
+                                style={{ textTransform: 'capitalize' }}
+                                startIcon={<HomeRoundedIcon />}
+                            >
+                                Home
+                            </Button>
+                        </Link>
+                    </div>
+                    <div style={{ display: 'flex' }}>
+                        <Link to='/login' style={linkStyles}>
+                            <Button
+                                name='login'
+                                onClick={handleItemClick}
+                                variant={activeItem === 'login' ? "outlined" : null}
+                                style={{ textTransform: 'capitalize' }}
+                                startIcon={<AccountCircle />}>
+                                Login
+                            </Button>
+                        </Link>
+                        <Link to='/register' style={linkStyles}>
+                            <Button
+                                name='register'
+                                onClick={handleItemClick}
+                                variant={activeItem === 'register' ? "outlined" : null}
+                                style={{ textTransform: 'capitalize' }}
+                                startIcon={<AppRegistrationRoundedIcon />}>
+                                Register
+                            </Button>
+                        </Link>
+                    </div>
+                </Toolbar>
+            </AppBar>
+        </Box>
+    );
 }
+
+const linkStyles = { textDecoration: 'none', color:'#1976d2' }
