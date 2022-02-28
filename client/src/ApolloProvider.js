@@ -1,21 +1,39 @@
 import App from './App'
 import {
-    ApolloClient,
-    InMemoryCache,
-    ApolloProvider,
-  } from "@apollo/client";
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+} from "@apollo/client";
+import { setContext } from "apollo-link-context";
+import { HttpLink } from '@apollo/client';
 
-  const client = new ApolloClient({
-    uri: 'http://localhost:5000',
-    cache: new InMemoryCache()
-  });
+const httpLink = new HttpLink({
+  uri: "http://localhost:5000",
+  // Additional options
+  // headers: { 
+  //   Authorization: sessionStorage.getItem('jwtToken')  ? `Bearer ${sessionStorage.getItem('jwtToken')}`:''
+  // }
+});
+
+const setAuthorizationLink = setContext((request, previousContext) => ({
+  headers: { 
+    authorization: sessionStorage.getItem('jwtToken')  ? `Bearer ${sessionStorage.getItem('jwtToken')}`:''
+  }
+}));
+
+const client = new ApolloClient({
+  // uri: 'http://localhost:5000',
+  link: setAuthorizationLink.concat(httpLink),
+  // link: httpLink,
+  cache: new InMemoryCache(),
+});
 
 
-export default function ApolloProv(){
+export default function ApolloProv() {
 
-    return(
+  return (
     <ApolloProvider client={client}>
-        <App/>
+      <App />
     </ApolloProvider>
-    )
+  )
 };
