@@ -1,3 +1,4 @@
+require('dotenv').config()
 const { ApolloServer } = require('apollo-server-express');
 const express = require('express')
 
@@ -6,13 +7,13 @@ const mongoose = require('mongoose')
 
 const typeDefs = require('./graphql/typesDefs')
 const resolvers = require('./graphql/resolvers')
-const {MONGODB} = require('./config.js')
+// const {MONGODB} = require('./config.js')
 
 const app = express();
 
 const connectDB = async () => {
     try {
-       await mongoose.connect(MONGODB, {useNewUrlParser: true})    
+       await mongoose.connect(process.env.MONGODB, {useNewUrlParser: true})    
     } catch (error) {
         console.log(error)
     }
