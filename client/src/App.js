@@ -11,6 +11,7 @@ import Register from './pages/Register';
 import ResponsiveAppBar from './components/MenuBar';
 import NotFound from './pages/NotFound';
 import AuthRoute from './utils/AuthRoutes';
+import SinglePost from './pages/SinglePost';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
               <Route path='/login' element={<Login />} />
               <Route path='/register' element={<Register />} />
             </Route>
+            <Route path='/posts/:postId' element={<SinglePost/>} />
             {/* '*' significa para cualquier otra ruta */}
             <Route path='*' element={<NotFound />} />
           </Routes>

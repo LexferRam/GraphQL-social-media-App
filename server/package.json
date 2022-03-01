@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "serve":"node index",
+    "serve": "node index",
     "dev": "nodemon index"
   },
   "keywords": [],
@@ -12,7 +12,9 @@
   "license": "ISC",
   "dependencies": {
     "apollo-server": "^3.6.3",
+    "apollo-server-express": "^3.6.3",
     "bcryptjs": "^2.4.3",
+    "express": "^4.17.3",
     "graphql": "^16.3.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.2"

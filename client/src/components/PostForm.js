@@ -17,7 +17,7 @@ const PostForm = () => {
 
     const [postData, setPostData] = useState({})
     const [errorsForm, setErrorsForm] = useState({})
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm({
         resolver: yupResolver(schema),
@@ -36,6 +36,11 @@ const PostForm = () => {
         //     proxy.writeQuery({query:FETCH_POSTS_QUERY,data})
         //     // console.log(result)
         // }
+        onError(errors) {
+            console.log(errors.graphQLErrors[0].message)
+            setErrorsForm(errors.graphQLErrors[0].message)
+            setOpen(true)
+        },
         refetchQueries: [
             FETCH_POSTS_QUERY, // DocumentNode object parsed with gql
             //'getPosts' // Query name
@@ -55,11 +60,11 @@ const PostForm = () => {
                 <Grid container direction="row"
                     justifyContent="center"
                     alignItems="center">
-                    <Grid item xs={12} sm={8} md={4} >
+                    <Grid item xs={12} >
                         <Stack sx={{ width: '100%' }} spacing={2}>
-                            {Object.keys(errorsForm).length > 0 && (
                                 <Collapse in={open}>
-                                    <Alert action={
+                                    <Alert 
+                                    action={
                                         <IconButton
                                             aria-label="close"
                                             color="inherit"
@@ -70,9 +75,11 @@ const PostForm = () => {
                                         >
                                             <CloseIcon fontSize="inherit" />
                                         </IconButton>
-                                    } severity="error">{Object.values(errorsForm).map(value => <div key={value}>* {value}</div>)}</Alert>
+                                    } severity="error">
+                                        {error?.graphQLErrors[0].message}
+                                  </Alert>
                                 </Collapse>
-                            )}
+                            {/* )} */}
                         </Stack>
                     </Grid>
                 </Grid>
@@ -83,7 +90,13 @@ const PostForm = () => {
                             <h2 style={{margin:0}} >Create Post</h2>
                         </div>
 
-                        <TextField margin="normal" error={Boolean(errors.body)} helperText={errors.body?.message} variant="outlined" {...register("body")} type="text" placeholder="Write a Post!" />
+                        <TextField
+                            margin="normal"
+                            error={Boolean(errors.body)}
+                            helperText={errors.body?.message}
+                            variant="outlined" {...register("body")}
+                            type="text" placeholder="Write a Post!"
+                        />
 
                         <LoadingButton
                             loading={loading ? loading : false}
