@@ -14,6 +14,7 @@ const PostCard = ({ post: { body, createdAt, id, username, likeCount, commentCou
 
     const { user } = useAuthContext()
     const [liked, setLiked] = useState(false)
+    const [likeCountState, setlikeCountState] = useState(likeCount)
 
     function commentPost() {
         console.log('comment Post!')
@@ -70,9 +71,13 @@ const PostCard = ({ post: { body, createdAt, id, username, likeCount, commentCou
                             style={{ textTransform: 'capitalize' }}
                             color='secondary'
                             startIcon={likeButton}
-                            onClick={likePost}
+                            onClick={() =>{
+                                setLiked(!liked ? true: false)
+                                setlikeCountState(liked ? likeCount - 1 : likeCount + 1)
+                                likePost()
+                            }}
                         >
-                            {likeCount}
+                            {likeCountState}
                         </Button>
 
 

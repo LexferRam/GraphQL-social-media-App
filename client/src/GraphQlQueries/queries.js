@@ -125,3 +125,11 @@ mutation{
   }
 }
   `
+
+
+
+//BODY EN POSTMAN PARA CONSULTAS EN GRAPHQL
+
+// {
+//   "query":"mutation{login(username:\"user2\",password:\"123456\"){ id email username createdAt token} }"
+// }
