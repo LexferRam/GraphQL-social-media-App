@@ -8,7 +8,7 @@ import { setContext } from "apollo-link-context";
 import { HttpLink } from '@apollo/client';
 
 const httpLink = new HttpLink({
-  uri: "http://localhost:5000/graphql",
+  uri: "https://graphqlsocialmediaapp.herokuapp.com/graphql",
   // Additional options
   // headers: { 
   //   Authorization: sessionStorage.getItem('jwtToken')  ? `Bearer ${sessionStorage.getItem('jwtToken')}`:''
